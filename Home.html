@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game Store</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #f2f2f2;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      background: #333;
+      color: white;
+    }
+    .search {
+      padding: 8px;
+      border-radius: 4px;
+      border: none;
+      width: 200px;
+    }
+    .btn {
+      background: #007bff;
+      color: white;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #0056b3;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 30px;
+      justify-content: center;
+    }
+    .box {
+      background: white;
+      width: 200px;
+      padding: 16px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .img {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      margin-bottom: 12px;
+    }
+    .title {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .price {
+      color: #007bff;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div>Game Store</div>
+    <input type="text" class="search" id="search" placeholder="Search for games..." onkeyup="filterProducts()">
+    <a class="btn" href="./cart.html">View Cart</a>
+  </div>
+
+  <div class="container" id="productContainer">
+    <div class="box">
+      <img src="https://upload.wikimedia.org/wikipedia/en/a/a7/God_of_War_4_cover.jpg" class="img">
+      <div class="title">God of War</div>
+      <div class="price">$49.99</div>
+      <button class="btn" onclick="addToCart('God of War')">Add to Cart</button>
+    </div>
+    <div class="box">
+      <img src="https://upload.wikimedia.org/wikipedia/en/a/a5/Grand_Theft_Auto_V.png" class="img">
+      <div class="title">GTA V</div>
+      <div class="price">$29.99</div>
+      <button class="btn" onclick="addToCart('GTA V')">Add to Cart</button>
+    </div>
+    <div class="box">
+      <img src="data:image/jpeg;base64,…" class="img">
+      <div class="title">Call of Duty: MW II</div>
+      <div class="price">$59.99</div>
+      <button class="btn" onclick="addToCart('Call of Duty: MW II')">Add to Cart</button>
+    </div>
+  </div>
+
+  <script>
+    function addToCart(productName) {
+      let items = JSON.parse(localStorage.getItem('cart')) || [];
+      items.push(productName);
+      localStorage.setItem('cart', JSON.stringify(items));
+      alert(productName + " added to cart!");
+    }
+
+    function filterProducts() {
+      const query = document.getElementById('search').value.toLowerCase();
+      document.querySelectorAll('.box').forEach(box => {
+        const title = box.querySelector('.title').textContent.toLowerCase();
+        box.style.display = title.includes(query) ? 'block' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
